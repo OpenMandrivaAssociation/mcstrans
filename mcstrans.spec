@@ -1,6 +1,6 @@
 Name: mcstrans
 Version: 0.2.7
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: SELinux Translation Daemon
 License: GPL
 Group: System/Servers
