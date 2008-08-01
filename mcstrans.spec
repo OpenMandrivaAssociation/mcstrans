@@ -1,8 +1,8 @@
 Name: mcstrans
-Version: 0.2.7
-Release: %mkrel 2
+Version: 0.2.11
+Release: %mkrel 1
 Summary: SELinux Translation Daemon
-License: GPL
+License: GPLv2+
 Group: System/Servers
 Source: http://fedora.redhat.com/projects/%{name}-%{version}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -35,30 +35,19 @@ from internal representations to user defined representation.
 
 %install
 %{__rm} -rf %{buildroot}
-%{__mkdir_p} %{buildroot}/%{_lib} 
-%{__mkdir_p} %{buildroot}%{_libdir} 
-%{makeinstall_std} LIBDIR="%{buildroot}%{_libdir}" SHLIBDIR="%{buildroot}/%{_lib}" install
-%{__rm} -f %{buildroot}%{_sbindir}/*
-%{__rm} -f %{buildroot}%{_libdir}/*.a
+%{makeinstall_std} LIBDIR="%{buildroot}%{_libdir}" SHLIBDIR="%{buildroot}/%{_lib}"
 
 %clean
 %{__rm} -rf %{buildroot}
 
-%post 
-chkconfig --add mcstrans
-if [ -f %{_var}/lock/subsys/mcstransd ]; then
-   %{__mv} %{_var}/lock/subsys/mcstransd %{_var}/lock/subsys/mcstrans
-fi
+%post
+%_post_service mcstrans
 
 %preun
-%_preun_service %{name}
-
-%postun 
-%postun_service %{name}
+%_preun_service mcstrans
 
 %files
 %defattr(-,root,root,0755)
 /sbin/mcstransd
-%{_sysconfdir}/rc.d/init.d/mcstrans
+%{_initrddir}/mcstrans
 %{_mandir}/man8/mcs.8*
-
