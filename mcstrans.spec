@@ -6,6 +6,7 @@ License: GPLv2+
 Group: System/Servers
 Source: http://fedora.redhat.com/projects/%{name}-%{version}.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires:	make
 BuildRequires: selinux-devel >= 1.30.3-1
 BuildRequires: cap-devel 
 Requires(pre): rpm-helper
